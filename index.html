@@ -312,7 +312,8 @@ function intro(){app.innerHTML=`
   <label class="opt"><input type="checkbox" id="consent"><span>Wyrażam dobrowolną zgodę na udział w badaniu.</span></label>
   <div class="row" id="demo" ${location.hash==='#demo'?'':'hidden'}><label class="label" for="inf">Tryb pokazowy (w badaniu wariant wynika z kodu: nieparzysty = niepewny raport, parzysty = dokładny)</label>
    <select id="inf"><option value="dokladna" ${S.info=='dokladna'?'selected':''}>Dokładny raport o siewach w regionie (±6 p.p.)</option><option value="niepewna" ${S.info=='niepewna'?'selected':''}>Niepewny raport o siewach w regionie (±20 p.p.)</option></select></div>
-  <div><button id="go" disabled>Zaczynam</button></div></div>`;
+  <div><button id="go" disabled>Zaczynam</button></div>
+  <p class="small muted" style="text-align:right"><a href="uk.html">Українською →</a></p></div>`;
  const chk=()=>$('#go').disabled=!($('#consent').checked&&$('#pid').value.trim());
  $('#consent').onchange=chk;$('#pid').oninput=chk;
  $('#go').onclick=()=>{S.id=$('#pid').value.trim();const dg=S.id.replace(/\D/g,'');
