@@ -1,6 +1,6 @@
 <title>Gra Gospodarstwo</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..100,500..800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..100,500..800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Playfair+Display:wght@700;900&display=swap">
 <style>
 [hidden]{display:none!important}
 /* Układ: jedna kolumna dla telefonu i laptopa. Scena pogody u góry, gazeta, rynek, mapa pola, uprawy, dolny pasek z kosztem i przyciskiem. */
@@ -53,7 +53,7 @@ input[type=range]{width:100%;accent-color:var(--c,var(--accent));height:28px}
 .stepper{display:grid;grid-template-columns:44px 1fr 44px;gap:8px;align-items:center}.stepper button{padding:0;font-size:20px}
 .stepper b{text-align:center;font:500 22px var(--f-mono)}
 .ticks{display:flex;justify-content:space-between;font:11px var(--f-mono);color:var(--muted);padding:0 4px;margin-top:-6px}.ticks .rec{color:var(--ink);font-weight:700;text-decoration:underline}
-.out4{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;text-align:center;font-size:11px}.out4 div{background:var(--soft);border-radius:5px;padding:5px 2px;display:flex;flex-direction:column;gap:2px}.out4 b{font:500 13px var(--f-mono)}
+.out4{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;text-align:center;font-size:11px}.out4 div{background:var(--soft);border-radius:8px;padding:5px 2px;display:flex;flex-direction:column;gap:1px;align-items:center}.out4 b{font:500 13px var(--f-mono)}
 table{border-collapse:collapse;width:100%;font-size:13.5px} th,td{padding:7px 8px;border-bottom:1px solid var(--line);text-align:right} th:first-child,td:first-child{text-align:left}
 th{font:600 11px var(--f-body);letter-spacing:.07em;text-transform:uppercase;color:var(--muted)}
 .scroll{overflow-x:auto} .pos{color:var(--good)} .neg{color:var(--bad)}
@@ -66,6 +66,64 @@ textarea{width:100%;min-height:110px;font:12px var(--f-mono);background:var(--bg
 .dock .info{display:flex;flex-direction:column;gap:2px;font-size:13px;min-width:0}.dock .info b{font:500 17px var(--f-mono)}
 .legend{display:flex;gap:14px;flex-wrap:wrap;font-size:12.5px}.legend span{display:flex;gap:6px;align-items:center}.legend i{width:12px;height:12px;border-radius:3px;display:inline-block}
 svg.field text{font:600 10px var(--f-body)}
+
+/* ===== v3.1: warstwa wizualna ===== */
+.hud{display:flex;gap:10px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:8px 10px}
+.hud .stats{flex:1;display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.hud .stats div{display:flex;flex-direction:column;gap:1px}.hud b{font:500 18px var(--f-mono)}
+.av{width:52px;height:52px;flex:none;border-radius:50%;overflow:hidden;line-height:0}
+.wx{border-radius:14px;color:#fff;padding:14px;display:flex;flex-direction:column;gap:12px;box-shadow:0 1px 0 rgba(0,0,0,.08)}
+.wx-top{display:flex;gap:12px;align-items:center}.wx-top .ic{flex:none;line-height:0}
+.wx-name{font:800 28px var(--f-display);font-stretch:80%;line-height:1}.wx-meta{font-size:13px;opacity:.92;margin-top:3px}
+.wx .gauge{margin-left:auto;text-align:center;font-size:10.5px;line-height:1.1;opacity:.95;flex:none}
+.wx-crops{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.chipw{background:rgba(255,255,255,.18);border-radius:10px;padding:8px 6px;display:flex;flex-direction:column;align-items:center;gap:3px;font-size:12px}
+.chipw b{font:600 17px var(--f-mono)}
+.chipw span{opacity:.95}
+.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}@media(max-width:700px){.tiles{grid-template-columns:1fr}}
+.tile{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:6px;border-top:5px solid var(--c)}
+.tile .top{display:flex;align-items:center;gap:8px}.tile .top svg{flex:none}
+.tile .pr{font:600 24px var(--f-mono);line-height:1}.tile .dl{font:600 12px var(--f-mono)}
+.rep{display:grid;grid-template-columns:28px 1fr 46px;gap:8px;align-items:center}
+.rep svg.bar{width:100%;height:24px}
+.feat{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}@media(max-width:560px){.feat{grid-template-columns:1fr}}
+.feat>div{display:flex;gap:10px;align-items:flex-start;background:var(--soft);border-radius:10px;padding:10px}
+.feat svg{flex:none}.feat b{font:700 14px var(--f-display);font-stretch:90%;display:block}.feat span{font-size:12.5px;color:var(--muted);line-height:1.35}
+/* gazeta */
+.paper{padding:0;gap:0;overflow:hidden}
+.paper .mast{display:block;border:0;padding:12px 14px 6px;text-align:center}
+.paper .mast .big{font:900 30px/1 'Playfair Display',Georgia,serif;letter-spacing:.02em;text-transform:none}
+.paper .mast .sub{display:flex;justify-content:space-between;font:600 10.5px var(--f-body);letter-spacing:.12em;text-transform:uppercase;border-top:3px double var(--paper-ink);border-bottom:1px solid var(--paper-ink);margin-top:8px;padding:4px 0}
+.lead{display:flex;gap:12px;padding:12px 14px;border-bottom:1px solid var(--paper-line);align-items:flex-start}
+.lead .pic{flex:none;width:76px;height:76px;border-radius:6px;background:rgba(0,0,0,.05);display:flex;align-items:center;justify-content:center}
+.lead b,.nws b{font:700 19px/1.15 'Playfair Display',Georgia,serif;display:block;margin:2px 0 4px}
+.lead .t,.nws .t{font-size:13.5px;line-height:1.4}
+.nws-wrap{display:grid;grid-template-columns:1fr 1fr}@media(max-width:560px){.nws-wrap{grid-template-columns:1fr}}
+.nws{display:flex;gap:10px;padding:10px 14px;border-bottom:1px solid var(--paper-line);align-items:flex-start}
+.nws:nth-child(odd){border-right:1px solid var(--paper-line)}@media(max-width:560px){.nws:nth-child(odd){border-right:0}}
+.nws b{font-size:15.5px}.nws svg{flex:none}
+/* wyniki */
+.hero{position:relative}.hero .av{position:absolute;left:12px;top:12px;border:3px solid rgba(255,255,255,.9);width:58px;height:58px}
+.rc{border:1px solid var(--line);border-left:6px solid var(--c);border-radius:12px;background:var(--surface);padding:12px;display:flex;flex-direction:column;gap:9px}
+.rc .hd{display:flex;align-items:center;gap:10px}.rc .hd b{font:700 17px var(--f-display);font-stretch:90%}
+.pill{margin-left:auto;font:700 13px var(--f-mono);padding:5px 10px;border-radius:99px;white-space:nowrap}
+.pill.p{background:color-mix(in srgb,var(--good) 18%,transparent);color:var(--good)}.pill.n{background:color-mix(in srgb,var(--bad) 18%,transparent);color:var(--bad)}.pill.z{background:var(--soft);color:var(--muted)}
+.bars{display:grid;grid-template-columns:78px 1fr 48px;gap:4px 8px;align-items:center;font-size:12px}
+.bars .tr{height:12px;border-radius:6px;background:var(--soft);overflow:hidden}.bars .tr i{display:block;height:100%;border-radius:6px;background:var(--c)}
+.bars .tr i.exp{background:repeating-linear-gradient(135deg,var(--c) 0 5px,transparent 5px 9px);opacity:.55}
+.bars .v{font:500 12.5px var(--f-mono);text-align:right}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip2{display:flex;align-items:center;gap:5px;padding:3px 9px 3px 5px;border-radius:99px;background:var(--soft);font:600 12px var(--f-body)}
+.chip2 svg{flex:none}.chip2 b{font-family:var(--f-mono);font-weight:600}
+.flow{display:grid;grid-template-columns:120px 1fr 56px;gap:6px 8px;align-items:center;font-size:13px}
+.flow .tr{height:16px;position:relative}.flow .tr i{position:absolute;top:0;height:100%;border-radius:4px}
+.flow .mid{position:absolute;left:50%;top:-3px;bottom:-3px;width:1px;background:var(--muted);opacity:.6}
+.flow .v{font:500 13px var(--f-mono);text-align:right}
+.adv{display:flex;gap:10px;align-items:center;background:var(--soft);border-radius:12px;padding:10px 12px}.adv .av{width:46px;height:46px}.adv p{font-size:13.5px;line-height:1.4}
+.pending{display:flex;gap:10px;align-items:center;border:1.5px dashed var(--c-rze);border-radius:12px;padding:10px 12px;background:color-mix(in srgb,var(--c-rze) 8%,transparent)}
+.pending p{font-size:13.5px;line-height:1.4}.pending svg{flex:none}
+.meter{display:flex;gap:3px;align-items:flex-end;height:22px}.meter i{flex:1;border-radius:2px;background:var(--line);height:40%}.meter i.on{background:var(--c);height:100%}.meter i.rec{outline:2px solid var(--ink);outline-offset:1px}
+.out4 svg{display:block;margin:0 auto}
 @media (prefers-reduced-motion:no-preference){main>*{animation:in .3s ease-out}@keyframes in{from{opacity:0;transform:translateY(5px)}}}
 </style>
 <main id="app"></main>
@@ -135,7 +193,7 @@ function settle(Wd,st,plan,t,insured){
 
 // ---------- USTAWIENIA ZBIERANIA DANYCH ----------
 const ENDPOINT="https://script.google.com/macros/s/AKfycbyP-3IgdeI3NPCv2XoA-EhyCJAVCfjhFGr99ro9uBjgknVPdRbf5Y4sr2ZpZgGbAA61bA/exec"; // adres aplikacji Google Apps Script (patrz instrukcja). Puste = dane tylko lokalnie (kopiowanie na końcu gry).
-const GAME_VERSION='3.0';
+const GAME_VERSION='3.1';
 const W=build(2026,WEATHER);
 const SYM={pszenica:'●',rzepak:'■',ziemniaki:'▲'};
 const COL={pszenica:'var(--c-psz)',rzepak:'var(--c-rze)',ziemniaki:'var(--c-zie)'};
@@ -146,14 +204,14 @@ const WDESC={N:'Typowe opady i temperatury. Plony na zwykłym poziomie.',
  D:'Upał i brak deszczu przez wiele tygodni. Ziemniaki, które potrzebują dużo wody, cierpią najbardziej. Dużo nawozu przy suszy się nie opłaca, bo rośliny go nie wykorzystają.',
  H:'Gwałtowne burze i grad niszczą rośliny tuż przed zbiorem. Najbardziej cierpi rzepak.'};
 const NEWS=[
- [{tag:'gosp',h:'Dziedziczysz gospodarstwo',t:'30 ha pod Wrocławiem, 80 tys. zł na koncie. Pierwszy rok zdecyduje, czy gospodarstwo utrzymasz.'}],
- [{tag:'pol',h:'Ministerstwo zapowiada dopłaty za różnorodność upraw',t:'Od sezonu 3 gospodarstwa, które siedzą co najmniej dwie uprawy po minimum 5 ha, dostaną 0,35 tys. zł do każdego zasianego hektara.'}],
- [{tag:'gosp',h:'Awaria ciągnika',t:'Naprawa kosztuje 5 tys. zł (doliczona do kosztów tego sezonu).'},{tag:'pol',h:'Dopłaty do różnorodności już obowiązują',t:'Zasiej dwie uprawy po minimum 5 ha, aby dostać 0,35 tys. zł do hektara.'}],
- [{tag:'pol',h:'Zapowiedź limitu azotu',t:'Od sezonu 5 maksymalny poziom nawozu wyniesie 8 (ochrona wód przed azotanami).'}],
- [{tag:'pol',h:'Pomoc po suszy',t:'Rząd wypłaca 0,5 tys. zł za każdy hektar zasiany w poprzednim sezonie. Pieniądze trafią do gotówki po tym sezonie.'},{tag:'pol',h:'Limit azotu obowiązuje',t:'Nie możesz stosować nawozu powyżej poziomu 8.'}],
- [{tag:'pol',h:'Ograniczenia eksportu rzepaku',t:'Ceny rzepaku spadły o około 20% w tym i następnym sezonie. Zasiew rzepaku jest teraz mniej opłacalny.'}],
- [{tag:'gosp',h:'Wydatki rodziny',t:'Remont domu: dodatkowe 3 tys. zł w tym sezonie.'}],
- [{tag:'gosp',h:'Ostatni sezon',t:'Rzepaku się nie sieje, bo przychód wpłynąłby po końcu gry. Liczy się gotówka po tym sezonie.'}]];
+ [{tag:'gosp',ic:'house',h:'Dziedziczysz gospodarstwo',t:'30 ha pod Wrocławiem i 80 tys. zł na koncie. Pierwszy rok zdecyduje, czy utrzymasz ziemię.'}],
+ [{tag:'pol',ic:'gov',h:'Dopłaty za różnorodność upraw',t:'Od sezonu 3: dwie uprawy po min. 5 ha dają +0,35 tys. zł do każdego zasianego hektara.'}],
+ [{tag:'pol',ic:'gov',h:'Dopłaty już obowiązują',t:'Zasiej dwie uprawy po min. 5 ha, a dostaniesz 0,35 tys. zł do hektara.'},{tag:'gosp',ic:'tractor',h:'Awaria ciągnika',t:'Naprawa kosztuje 5 tys. zł. Kwota trafia do kosztów tego sezonu.'}],
+ [{tag:'pol',ic:'bag',h:'Limit azotu od sezonu 5',t:'Nawóz powyżej poziomu 8 będzie zakazany (ochrona wód przed azotanami).'}],
+ [{tag:'pol',ic:'drought',h:'Pomoc po suszy',t:'Rząd płaci 0,5 tys. zł za każdy ha zasiany w poprzednim sezonie. Pieniądze wpłyną po tym sezonie.'},{tag:'pol',ic:'bag',h:'Limit azotu obowiązuje',t:'Maksymalny poziom nawozu to teraz 8.'}],
+ [{tag:'pol',ic:'ship',h:'Ograniczenia eksportu rzepaku',t:'Ceny rzepaku spadły o ok. 20% w tym i następnym sezonie. Rzepak opłaca się mniej.'}],
+ [{tag:'gosp',ic:'house',h:'Wydatki rodziny',t:'Remont domu: dodatkowe 3 tys. zł w tym sezonie.'}],
+ [{tag:'gosp',ic:'coin',h:'Ostatni sezon',t:'Rzepaku się nie sieje: zapłata przyszłaby po końcu gry. Liczy się gotówka po tym sezonie.'}]];
 // ---------- STAN ----------
 let S;
 const emptyPlan=()=>({ha:{pszenica:0,rzepak:0,ziemniaki:0},L:{pszenica:null,rzepak:null,ziemniaki:null}});
@@ -172,17 +230,61 @@ const zlt=p=>f0(p*1000), pct=x=>f0(x*100)+'%';
 const cname=k=>`<span style="color:${COL[k]};font-weight:600">${SYM[k]} ${NAME[k]}</span>`;
 const sum=o=>CROPS.reduce((a,k)=>a+o[k],0);
 // ---------- GRAFIKA ----------
+const WMETA={N:'18°C · opady 55 mm',G:'22°C · opady 85 mm',D:'31°C · opady 8 mm',H:'20°C · burze i grad'};
+const WBG={N:'linear-gradient(135deg,#4E8FC9,#9CC7E8)',G:'linear-gradient(135deg,#2F8FE5,#E9C45A)',D:'linear-gradient(135deg,#C9731F,#EDB75A)',H:'linear-gradient(135deg,#2F3844,#6B7788)'};
+function wIcon(w,s=48){const sun='<circle cx="19" cy="19" r="9" fill="#FFC93C"/>',cl=(x,y,c='#fff')=>`<g fill="${c}"><ellipse cx="${x}" cy="${y}" rx="13" ry="7"/><ellipse cx="${x-6}" cy="${y-4}" rx="7" ry="6"/><ellipse cx="${x+4}" cy="${y-6}" rx="8" ry="7"/></g>`;
+ let b='';
+ if(w==='N')b=sun+`<g stroke="#FFC93C" stroke-width="2" stroke-linecap="round">${[0,1,2,3,4,5].map(i=>{const a=i*Math.PI/3-1.2;return`<line x1="${19+12*Math.cos(a)}" y1="${19+12*Math.sin(a)}" x2="${19+16*Math.cos(a)}" y2="${19+16*Math.sin(a)}"/>`}).join('')}</g>`+cl(29,31);
+ if(w==='G')b=sun+`<g stroke="#FFC93C" stroke-width="2" stroke-linecap="round">${[0,1,2,3,4,5,6,7].map(i=>{const a=i*Math.PI/4;return`<line x1="${19+12*Math.cos(a)}" y1="${19+12*Math.sin(a)}" x2="${19+16*Math.cos(a)}" y2="${19+16*Math.sin(a)}"/>`}).join('')}</g>`+cl(29,28)+'<g stroke="#5AB1F2" stroke-width="2.2" stroke-linecap="round"><line x1="22" y1="37" x2="20" y2="43"/><line x1="29" y1="37" x2="27" y2="43"/><line x1="36" y1="37" x2="34" y2="43"/></g>';
+ if(w==='D')b='<circle cx="24" cy="21" r="12" fill="#FF7A1A"/><g stroke="#FF7A1A" stroke-width="2.4" stroke-linecap="round">'+[...Array(10).keys()].map(i=>{const a=i*Math.PI/5;return`<line x1="${24+15*Math.cos(a)}" y1="${21+15*Math.sin(a)}" x2="${24+20*Math.cos(a)}" y2="${21+20*Math.sin(a)}"/>`}).join('')+'</g><g stroke="#6B4F22" stroke-width="1.6" fill="none" stroke-linecap="round"><path d="M4 44l8-4 5 3 8-4 6 3 9-3 4 2"/></g>';
+ if(w==='H')b=cl(24,22,'#3A4554')+`<polygon points="25,24 18,36 24,36 20,46 32,32 26,32 30,24" fill="#FFE066"/>`+'<g fill="#EAF4FB"><circle cx="9" cy="38" r="2.3"/><circle cx="38" cy="40" r="2.3"/><circle cx="12" cy="45" r="2"/><circle cx="41" cy="33" r="2"/></g>';
+ return `<svg width="${s}" height="${s}" viewBox="0 0 48 48" aria-hidden="true">${b}</svg>`}
+function cropIcon(k,s=40){
+ const a={pszenica:'<g stroke="#8A5A00" stroke-width="1.8" stroke-linecap="round" fill="none"><path d="M24 45V16"/><path d="M24 34c-6 0-9-3-10-8M24 34c6 0 9-3 10-8"/></g><g fill="#E0A526" stroke="#B9801A" stroke-width=".8"><ellipse cx="24" cy="9" rx="3.6" ry="7.5"/><ellipse cx="15.5" cy="19" rx="3.2" ry="6.5" transform="rotate(-28 15.5 19)"/><ellipse cx="32.5" cy="19" rx="3.2" ry="6.5" transform="rotate(28 32.5 19)"/><ellipse cx="14" cy="29" rx="2.8" ry="5.5" transform="rotate(-35 14 29)"/><ellipse cx="34" cy="29" rx="2.8" ry="5.5" transform="rotate(35 34 29)"/></g>',
+ rzepak:'<g stroke="#3E8A2E" stroke-width="2" stroke-linecap="round" fill="none"><path d="M24 45V16M24 36c-5-2-8-5-8-9M24 30c5-2 8-5 8-9"/></g><g fill="#3E8A2E"><ellipse cx="14" cy="38" rx="6" ry="2.6" transform="rotate(-25 14 38)"/><ellipse cx="34" cy="40" rx="6" ry="2.6" transform="rotate(25 34 40)"/></g><g fill="#FFD21F">'+[[24,9],[18,13],[30,13],[21,19],[27,19],[15,21],[33,21],[24,25]].map(p=>`<circle cx="${p[0]}" cy="${p[1]}" r="3.6"/>`).join('')+'</g><g fill="#E8A800">'+[[24,9],[18,13],[30,13],[21,19],[27,19]].map(p=>`<circle cx="${p[0]}" cy="${p[1]}" r="1.1"/>`).join('')+'</g>',
+ ziemniaki:'<g fill="#3E8A2E"><ellipse cx="17" cy="10" rx="8" ry="4" transform="rotate(-30 17 10)"/><ellipse cx="31" cy="9" rx="8" ry="4" transform="rotate(30 31 9)"/><ellipse cx="24" cy="6" rx="4" ry="6"/></g><ellipse cx="18" cy="34" rx="12" ry="9" fill="#A874BB" transform="rotate(-15 18 34)"/><ellipse cx="32" cy="32" rx="10" ry="8" fill="#8E5AA6" transform="rotate(20 32 32)"/><g fill="#5E3A73"><circle cx="14" cy="32" r="1.3"/><circle cx="21" cy="37" r="1.3"/><circle cx="30" cy="29" r="1.2"/><circle cx="35" cy="35" r="1.2"/></g><path d="M24 12v14" stroke="#3E8A2E" stroke-width="2"/>'}[k];
+ return `<svg width="${s}" height="${s}" viewBox="0 0 48 48" aria-hidden="true">${a}</svg>`}
+function bagIcon(s=28){return `<svg width="${s}" height="${s}" viewBox="0 0 48 48" aria-hidden="true"><path d="M12 12h24l3 6v24a3 3 0 0 1-3 3H12a3 3 0 0 1-3-3V18z" fill="#C9B07A"/><path d="M12 12h24l3 6H9z" fill="#A8905A"/><rect x="15" y="24" width="18" height="13" rx="2" fill="#2C6A4D"/><text x="24" y="35" text-anchor="middle" font-size="11" font-weight="700" fill="#fff" font-family="Arial">NPK</text></svg>`}
+function farmerSVG(mood='ok',s=52){
+ const mouth={happy:'<path d="M26 36q6 6 12 0" stroke="#7A3B2B" stroke-width="1.8" fill="none" stroke-linecap="round"/>',ok:'<path d="M27 37h10" stroke="#7A3B2B" stroke-width="1.8" stroke-linecap="round"/>',sad:'<path d="M26 39q6-5 12 0" stroke="#7A3B2B" stroke-width="1.8" fill="none" stroke-linecap="round"/>'}[mood];
+ const brow=mood==='sad'?'<path d="M23 25l7 2M41 25l-7 2" stroke="#5A3A22" stroke-width="1.6" stroke-linecap="round"/>':'';
+ return `<svg width="${s}" height="${s}" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="32" fill="#CFE3C4"/><path d="M8 64c2-14 12-18 24-18s22 4 24 18z" fill="#3F6FA0"/><path d="M24 46l8 9 8-9-8-3z" fill="#F4EBD8"/><circle cx="32" cy="31" r="13" fill="#F1C9A0"/><ellipse cx="32" cy="22" rx="23" ry="5.2" fill="#E3B95A"/><path d="M19 22c0-13 26-13 26 0z" fill="#EFCB74"/><rect x="19" y="18.5" width="26" height="3.4" fill="#B5453A"/><circle cx="27" cy="31" r="1.7" fill="#2B2A26"/><circle cx="37" cy="31" r="1.7" fill="#2B2A26"/>${brow}${mouth}</svg>`}
+const moodOf=x=>x>20?'happy':x>=-10?'ok':'sad';
+const NI={
+ tractor:'<rect x="8" y="16" width="18" height="12" rx="2" fill="#2C6A4D"/><rect x="22" y="8" width="12" height="14" rx="2" fill="#3C8C66"/><rect x="25" y="11" width="6" height="7" fill="#CFE8F5"/><circle cx="14" cy="31" r="8" fill="#333"/><circle cx="14" cy="31" r="3" fill="#bbb"/><circle cx="33" cy="33" r="5.5" fill="#333"/><circle cx="33" cy="33" r="2" fill="#bbb"/>',
+ gov:'<polygon points="4,16 20,6 36,16" fill="#6B7A99"/><rect x="6" y="17" width="28" height="3" fill="#8794B3"/><g fill="#C9D1E3"><rect x="8" y="21" width="4" height="12"/><rect x="15" y="21" width="4" height="12"/><rect x="22" y="21" width="4" height="12"/><rect x="29" y="21" width="3" height="12"/></g><rect x="4" y="33" width="32" height="4" fill="#6B7A99"/>',
+ ship:'<path d="M4 28h32l-5 8H9z" fill="#2A5E9B"/><rect x="9" y="17" width="8" height="8" fill="#D9822B"/><rect x="18" y="17" width="8" height="8" fill="#3E8A2E"/><rect x="13" y="9" width="8" height="8" fill="#B5453A"/><path d="M2 38q4 -3 8 0t8 0 8 0 8 0" stroke="#5AB1F2" stroke-width="2" fill="none"/>',
+ pump:'<rect x="8" y="8" width="16" height="26" rx="2" fill="#B5453A"/><rect x="11" y="11" width="10" height="7" fill="#EEF4F7"/><path d="M24 14h5l4 5v10a2 2 0 0 0 4 0V18" stroke="#444" stroke-width="2.2" fill="none"/><rect x="5" y="34" width="22" height="3" fill="#555"/>',
+ bag:'<path d="M10 9h20l3 5v21a3 3 0 0 1-3 3H10a3 3 0 0 1-3-3V14z" fill="#C9B07A"/><path d="M10 9h20l3 5H7z" fill="#A8905A"/><rect x="12" y="20" width="16" height="11" rx="2" fill="#2C6A4D"/><text x="20" y="29" text-anchor="middle" font-size="9" font-weight="700" fill="#fff" font-family="Arial">NPK</text>',
+ house:'<polygon points="4,19 20,6 36,19" fill="#B5453A"/><rect x="8" y="19" width="24" height="16" fill="#E8D9B5"/><rect x="17" y="25" width="7" height="10" fill="#8A5A2B"/><rect x="10" y="22" width="5" height="5" fill="#9CC7E8"/><rect x="26" y="22" width="4" height="5" fill="#9CC7E8"/>',
+ drought:'<circle cx="26" cy="13" r="7" fill="#FF7A1A"/><g stroke="#FF7A1A" stroke-width="2" stroke-linecap="round"><line x1="26" y1="2" x2="26" y2="4"/><line x1="37" y1="13" x2="35" y2="13"/><line x1="34" y1="5" x2="33" y2="6"/></g><rect x="3" y="27" width="34" height="10" fill="#B79A55"/><g stroke="#6B4F22" stroke-width="1.5" fill="none"><path d="M6 29l6 3-3 3 7 2M20 28l-3 4 6 2-2 3M32 29l-3 4 5 2"/></g>',
+ coin:'<circle cx="20" cy="20" r="14" fill="#E3B95A" stroke="#B9801A" stroke-width="2"/><text x="20" y="25" text-anchor="middle" font-size="14" font-weight="800" fill="#7A5410" font-family="Arial">zł</text>',
+ chart:'<rect x="6" y="22" width="6" height="12" fill="#3E8A2E"/><rect x="15" y="14" width="6" height="20" fill="#2A5E9B"/><rect x="24" y="8" width="6" height="26" fill="#D9822B"/><line x1="4" y1="35" x2="36" y2="35" stroke="#555" stroke-width="1.5"/>'};
+const newsIcon=(n,s=40)=>`<svg width="${s}" height="${s}" viewBox="0 0 40 40" aria-hidden="true">${NI[n]||NI.chart}</svg>`;
+const ICO={
+ rot:'<path d="M10 24a14 14 0 0 1 24-8l3-3v9h-9l3-3a9 9 0 0 0-15 5z" fill="#2C6A4D"/><path d="M38 24a14 14 0 0 1-24 8l-3 3v-9h9l-3 3a9 9 0 0 0 15-5z" fill="#8FCB66"/>',
+ shield:'<path d="M24 5l15 5v12c0 10-7 17-15 20C16 39 9 32 9 22V10z" fill="#2A5E9B"/><path d="M17 23l5 5 10-11" stroke="#fff" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>',
+ coin:'<circle cx="24" cy="24" r="17" fill="#E3B95A" stroke="#B9801A" stroke-width="2"/><text x="24" y="30" text-anchor="middle" font-size="17" font-weight="800" fill="#7A5410" font-family="Arial">zł</text>',
+ news:'<rect x="7" y="9" width="34" height="30" rx="2" fill="#FBF7EC" stroke="#8A8470" stroke-width="2"/><rect x="11" y="13" width="26" height="6" fill="#2B2A26"/><g fill="#8A8470"><rect x="11" y="22" width="11" height="3"/><rect x="11" y="28" width="11" height="3"/><rect x="25" y="22" width="12" height="9"/></g>',
+ gov:'<g transform="translate(4 4) scale(1)">'+NI.gov+'</g>',
+ chart:'<g transform="translate(4 4)">'+NI.chart+'</g>'};
+const icoSVG=(n,s=34)=>`<svg width="${s}" height="${s}" viewBox="0 0 48 48" aria-hidden="true">${ICO[n]}</svg>`;
 function sceneSVG(w){
  const sky={N:['#8DBFE3','#E3EFF6'],G:['#5FB0EE','#FFF0BF'],D:['#E8A24A','#F8DA8E'],H:['#3F4B5C','#8794A6']}[w];
  const gr={N:['#6C9B4E','#4F7F3A'],G:['#78AA50','#548C3A'],D:['#B79A55','#9B7F43'],H:['#587A4A','#42623A']}[w];
  let o=`<svg viewBox="0 0 360 150" role="img" aria-label="Pogoda: ${WNAME[w]}"><defs><linearGradient id="sk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${sky[0]}"/><stop offset="1" stop-color="${sky[1]}"/></linearGradient></defs><rect width="360" height="150" fill="url(#sk)"/>`;
  const cloud=(x,y,s,c)=>`<g fill="${c}" transform="translate(${x} ${y}) scale(${s})"><ellipse cx="0" cy="0" rx="26" ry="10"/><ellipse cx="-14" cy="-6" rx="14" ry="10"/><ellipse cx="10" cy="-9" rx="16" ry="12"/></g>`;
- if(w==='N'){o+=`<circle cx="285" cy="38" r="17" fill="#FFF6D0" opacity=".9"/>`+cloud(90,40,1.2,'#fff')+cloud(240,60,1,'#F2F6F9')}
- if(w==='G'){o+=`<g stroke="#FFD25A" stroke-width="3" stroke-linecap="round">${[...Array(12).keys()].map(i=>{const a=i*Math.PI/6;return`<line x1="${290+28*Math.cos(a)}" y1="${42+28*Math.sin(a)}" x2="${290+38*Math.cos(a)}" y2="${42+38*Math.sin(a)}"/>`}).join('')}</g><circle cx="290" cy="42" r="22" fill="#FFD25A"/>`+cloud(80,52,.9,'#fff')}
- if(w==='D'){o+=`<circle cx="270" cy="82" r="38" fill="#E9531F" opacity=".92"/><circle cx="270" cy="82" r="52" fill="#F28C28" opacity=".25"/>`}
- if(w==='H'){o+=cloud(70,38,1.5,'#2B3440')+cloud(190,30,1.7,'#3A4554')+cloud(300,48,1.4,'#2B3440')+`<polygon points="200,52 186,86 198,86 190,114 214,76 202,76 210,52" fill="#FFE066"/>`+[...Array(14).keys()].map(i=>`<circle cx="${30+i*24}" cy="${100+(i*37)%30}" r="2.2" fill="#E8F2FA"/>`).join('')}
- o+=`<path d="M0 108 Q70 90 140 104 T280 98 T360 106 V150 H0Z" fill="${gr[0]}"/><path d="M0 128 Q90 114 180 126 T360 122 V150 H0Z" fill="${gr[1]}"/>`;
- if(w==='D')o+=`<g stroke="#6B4F22" stroke-width="1.4" fill="none" opacity=".7"><path d="M30 140 l10 -6 l6 4 l9 -5"/><path d="M130 142 l8 -5 l9 3"/><path d="M230 138 l10 -4 l7 4 l10 -3"/><path d="M310 143 l9 -4 l8 3"/></g>`;
+ if(w==='N'){o+=`<circle cx="300" cy="34" r="17" fill="#FFF6D0" opacity=".9"/>`+cloud(110,34,1.2,'#fff')+cloud(240,52,1,'#F2F6F9')}
+ if(w==='G'){o+=`<g stroke="#FFD25A" stroke-width="3" stroke-linecap="round">${[...Array(12).keys()].map(i=>{const a=i*Math.PI/6;return`<line x1="${300+26*Math.cos(a)}" y1="${38+26*Math.sin(a)}" x2="${300+36*Math.cos(a)}" y2="${38+36*Math.sin(a)}"/>`}).join('')}</g><circle cx="300" cy="38" r="20" fill="#FFD25A"/>`+cloud(120,46,.9,'#fff')}
+ if(w==='D'){o+=`<circle cx="285" cy="70" r="36" fill="#E9531F" opacity=".92"/><circle cx="285" cy="70" r="50" fill="#F28C28" opacity=".25"/>`}
+ if(w==='H'){o+=cloud(80,34,1.5,'#2B3440')+cloud(200,28,1.7,'#3A4554')+cloud(310,44,1.4,'#2B3440')+`<polygon points="215,50 201,84 213,84 205,112 229,74 217,74 225,50" fill="#FFE066"/>`+[...Array(14).keys()].map(i=>`<circle cx="${30+i*24}" cy="${96+(i*37)%30}" r="2.2" fill="#E8F2FA"/>`).join('')}
+ o+=`<path d="M0 100 Q70 82 140 96 T280 92 T360 98 V150 H0Z" fill="${gr[0]}"/>`;
+ // stodoła, silos, płot, ciągnik
+ o+=`<g transform="translate(18 70)"><rect x="0" y="12" width="38" height="26" fill="#B5453A"/><polygon points="-3,13 19,-2 41,13" fill="#7C2B22"/><rect x="12" y="20" width="14" height="18" fill="#8E3328"/><path d="M12 20l14 18M26 20L12 38" stroke="#F4EBD8" stroke-width="1.6"/><rect x="44" y="6" width="12" height="32" fill="#C9CFD6"/><path d="M44 6a6 6 0 0 1 12 0z" fill="#9AA3AE"/></g>`;
+ o+=`<path d="M0 124 Q90 108 180 120 T360 116 V150 H0Z" fill="${gr[1]}"/>`;
+ o+=`<g stroke="#8A6A3B" stroke-width="2" fill="none"><path d="M70 118h70M70 125h70"/>${[72,90,108,126,140].map(x=>`<path d="M${x} 114v16"/>`).join('')}</g>`;
+ o+=`<g transform="translate(255 108)"><rect x="0" y="8" width="26" height="12" rx="2" fill="#2C6A4D"/><rect x="14" y="0" width="12" height="12" rx="2" fill="#3C8C66"/><rect x="17" y="3" width="6" height="6" fill="#CFE8F5"/><circle cx="6" cy="23" r="8" fill="#333"/><circle cx="6" cy="23" r="3" fill="#aaa"/><circle cx="26" cy="25" r="5.5" fill="#333"/><circle cx="26" cy="25" r="2" fill="#aaa"/></g>`;
+ if(w==='D')o+=`<g stroke="#6B4F22" stroke-width="1.4" fill="none" opacity=".7"><path d="M150 140l10 -6 l6 4 l9 -5"/><path d="M190 142l8 -5 l9 3"/><path d="M310 143l9 -4 l8 3"/></g>`;
  return o+'</svg>'}
 function fieldSVG(plan,prev,t){
  const cols=6,rows=5,tw=52,th=40,g=5,seq=[];
@@ -190,17 +292,22 @@ function fieldSVG(plan,prev,t){
  let o=`<svg class="field" viewBox="0 0 ${cols*tw+(cols-1)*g} ${rows*th+(rows-1)*g}" role="img" aria-label="Mapa pola 30 ha">`;
  for(let n=0;n<cols*rows;n++){const x=(n%cols)*(tw+g),y=Math.floor(n/cols)*(th+g),c=seq[n];
   if(c){const tired=c.i<Math.min(plan.ha[c.k],c.k==='rzepak'?prev.ha.rzepak:prev.ha[c.k]);
-   o+=`<rect x="${x}" y="${y}" width="${tw}" height="${th}" rx="5" fill="${COL[c.k]}"/><g stroke="#000" stroke-opacity=".22" stroke-width="2">${[10,20,30].map(d=>`<line x1="${x+5}" y1="${y+d}" x2="${x+tw-5}" y2="${y+d}"/>`).join('')}</g>`;
-   o+=`<text x="${x+tw/2}" y="${y+th/2+4}" text-anchor="middle" fill="#fff" fill-opacity=".92">${SYM[c.k]}</text>`;
-   if(tired)o+=`<circle cx="${x+tw-9}" cy="${y+9}" r="6" fill="#fff" fill-opacity=".92"/><text x="${x+tw-9}" y="${y+12.5}" text-anchor="middle" fill="#A8461F" style="font-size:10px">!</text>`}
+   o+=`<rect x="${x}" y="${y}" width="${tw}" height="${th}" rx="5" fill="${COL[c.k]}"/>`;
+   if(c.k==='pszenica')o+=`<g stroke="#FFF2B8" stroke-opacity=".75" stroke-width="2" stroke-linecap="round">${[9,19,29,39,47].map((d,j)=>`<path d="M${x+d} ${y+10+(j%2)*3}v${th-18}"/>`).join('')}</g><g fill="#FFF2B8" fill-opacity=".85">${[9,19,29,39,47].map((d,j)=>`<ellipse cx="${x+d}" cy="${y+9+(j%2)*3}" rx="2.2" ry="4"/>`).join('')}</g>`;
+   if(c.k==='rzepak')o+=`<g fill="#FFE04A">${[[8,10],[20,8],[33,12],[45,9],[12,22],[26,20],[40,24],[8,32],[22,33],[36,34],[47,31]].map(p=>`<circle cx="${x+p[0]}" cy="${y+p[1]}" r="2.6"/>`).join('')}</g>`;
+   if(c.k==='ziemniaki')o+=`<g stroke="#3B1F4B" stroke-opacity=".5" stroke-width="3" stroke-linecap="round">${[10,20,30].map(d=>`<line x1="${x+5}" y1="${y+d}" x2="${x+tw-5}" y2="${y+d}"/>`).join('')}</g><g fill="#D9B8EA">${[[10,6],[26,7],[42,6],[16,16],[34,17],[10,26],[26,27],[42,26],[18,35],[36,35]].map(p=>`<circle cx="${x+p[0]}" cy="${y+p[1]}" r="1.9"/>`).join('')}</g>`;
+   if(tired)o+=`<circle cx="${x+tw-9}" cy="${y+9}" r="7" fill="#fff" fill-opacity=".95"/><text x="${x+tw-9}" y="${y+13}" text-anchor="middle" fill="#A8461F" style="font-size:11px">!</text>`}
   else o+=`<rect x="${x}" y="${y}" width="${tw}" height="${th}" rx="5" fill="var(--soil)" opacity=".55"/><circle cx="${x+14}" cy="${y+12}" r="1.6" fill="#000" opacity=".25"/><circle cx="${x+34}" cy="${y+26}" r="1.6" fill="#000" opacity=".25"/><circle cx="${x+22}" cy="${y+31}" r="1.6" fill="#000" opacity=".25"/>`}
  return o+'</svg>'}
+function spark(vals,col,w=96,h=30){const mn=Math.min(...vals),mx=Math.max(...vals),r=(mx-mn)||1;
+ const pts=vals.map((v,i)=>[2+i*(w-4)/Math.max(1,vals.length-1),h-3-(v-mn)/r*(h-8)]);
+ return `<svg width="${w}" height="${h}" viewBox="0 0 ${w} ${h}" aria-hidden="true"><polyline points="${pts.map(p=>p.join(',')).join(' ')}" fill="none" stroke="${col}" stroke-width="2" stroke-linejoin="round"/><circle cx="${pts[pts.length-1][0]}" cy="${pts[pts.length-1][1]}" r="3" fill="${col}"/></svg>`}
 // ---------- EKRANY ----------
 function intro(){app.innerHTML=`
- <div class="scene">${sceneSVG('G')}<div class="cap"><div><div class="label" style="color:#fff;opacity:.85">Badanie decyzji w rolnictwie · 30–35 minut</div><b>Gra Gospodarstwo</b></div></div></div>
+ <div class="scene hero">${sceneSVG('G')}<div class="av">${farmerSVG('happy',58)}</div><div class="cap"><div><div class="label" style="color:#fff;opacity:.9">Gra decyzyjna · 30–35 minut</div><b>Gospodarstwo</b></div></div></div>
  <div class="panel">
-  <p>Dziedziczysz gospodarstwo o powierzchni <b>30 ha</b>. Przez <b>8 sezonów</b> decydujesz, co siejesz, ile nawozu stosujesz i jak reagujesz na pogodę, ceny i decyzje rządu. Celem jest jak najwyższa gotówka po ósmym sezonie.</p>
-  <p class="muted small">Dane z gry są anonimowe i posłużą wyłącznie do pracy licencjackiej. Możesz przerwać grę w dowolnej chwili. W loterii na początku nie ma dobrych ani złych odpowiedzi.</p>
+  <p>Dziedziczysz <b>30 ha</b> pod Wrocławiem i <b>80 tys. zł</b>. Przez <b>8 sezonów</b> decydujesz: co siejesz, ile nawozu dajesz i jak reagujesz na pogodę, ceny i decyzje rządu. Wygrywa najwyższa gotówka po ósmym sezonie.</p>
+  <p class="muted small">Dane są anonimowe i posłużą wyłącznie do pracy licencjackiej. Możesz przerwać grę w dowolnej chwili. W loterii nie ma dobrych ani złych odpowiedzi.</p>
   <label class="label" for="pid">Kod uczestnika</label><input type="text" id="pid" placeholder="np. A07" value="${S.id}" autocomplete="off">
   <label class="opt"><input type="checkbox" id="consent"><span>Wyrażam dobrowolną zgodę na udział w badaniu.</span></label>
   <div class="row" id="demo" ${location.hash==='#demo'?'':'hidden'}><label class="label" for="inf">Tryb pokazowy (w badaniu wariant wynika z kodu: nieparzysty = niepewny raport, parzysty = dokładny)</label>
@@ -219,9 +326,9 @@ function lottery(){app.innerHTML=`
  document.querySelectorAll('[name=lot]').forEach(e=>e.onchange=()=>{S.lot=+e.value;$('#nx').disabled=false});
  $('#nx').onclick=()=>{S.screen='rules';render()};}
 function weatherTable(L){return `<div class="scroll"><table>
- <tr><th>Pogoda</th>${CROPS.map(k=>`<th>${cname(k)}</th>`).join('')}</tr>
- ${['G','N','D','H'].map(w=>`<tr><td><b>${WNAME[w]}</b></td>${CROPS.map(k=>{const v=P[k].W[w]*100;return`<td class="num ${v>100?'pos':v<80?'neg':''}">${f0(v)}%</td>`}).join('')}</tr>`).join('')}
- </table></div><p class="small muted">100% to plon w normalnym roku (przy dobrze dobranym nawozie). Ziemniaki najbardziej potrzebują wody. Rzepak najmocniej cierpi od gradu i burz. Pszenica jest najbardziej odporna.</p>`}
+ <tr><th>Pogoda</th>${CROPS.map(k=>`<th>${cropIcon(k,26)}</th>`).join('')}</tr>
+ ${['G','N','D','H'].map(w=>`<tr><td style="display:flex;gap:8px;align-items:center">${wIcon(w,28)}<b>${WNAME[w]}</b></td>${CROPS.map(k=>{const v=P[k].W[w]*100;return`<td class="num ${v>100?'pos':v<80?'neg':''}">${f0(v)}%</td>`}).join('')}</tr>`).join('')}
+ </table></div><p class="small muted">100% = plon w normalnym roku. Ziemniaki najbardziej potrzebują wody, rzepak najmocniej cierpi od gradu, pszenica jest najbardziej odporna.</p>`}
 function rules(){
  const Q=[['Rzepak zasiany w sezonie 3 przynosi przychód:',['w sezonie 3','w sezonie 4','wcale'],1],
   ['Co dzieje się z hektarami, których nie zasiejesz?',['nic, nie kosztują','płacisz 0,4 tys. zł za każdy ha odłogu','dostajesz dopłatę'],1],
@@ -233,15 +340,15 @@ function rules(){
   ${CROPS.map(k=>`<tr><td>${cname(k)}</td><td style="text-align:left">${P[k].lag?'rok później (uprawa ozima)':'w tym samym sezonie'}</td><td class="num">${REC[k]}</td><td class="num">${f1(P[k].y*yfw(k,REC[k],'N')*P[k].pbar-P[k].vr-REC[k]*P[k].fert)} tys. zł</td></tr>`).join('')}
  </table></div><p class="small muted">*Przy normalnej pogodzie, cenie referencyjnej i zalecanym nawozie. Rzeczywisty wynik zależy od ceny, pogody i decyzji rządu.</p></div>
  <div class="panel"><h3>Pogoda wpływa na plony</h3>${weatherTable()}</div>
- <div class="panel"><h3>Co musisz wiedzieć</h3><ul style="margin:0;padding-left:18px;display:flex;flex-direction:column;gap:6px">
-  <li><b>Prognoza pogody</b> trafia tylko w około 6 przypadkach na 10.</li>
-  <li><b>Nawóz</b> ma poziomy 0–${LMAX}. Zalecany poziom zwykle daje największy zysk w normalnym roku. W suszy najlepszy poziom jest niższy, a w roku sprzyjającym wyższy. Za mało nawozu obniża plon, za dużo kosztuje więcej, niż daje.</li>
-  <li><b>Płodozmian:</b> ta sama uprawa na tym samym polu dwa sezony z rzędu daje niższy plon (pszenica o 5%, rzepak i ziemniaki o 12%). Na mapie takie pole jest oznaczone wykrzyknikiem.</li>
-  <li><b>Ceny</b> (w zł za tonę) zależą od tego, ile danej uprawy zasieją wszyscy rolnicy w regionie. Bank publikuje raport o siewach, ale raport ma błąd.</li>
-  <li><b>Rząd</b> w trakcie gry zmienia przepisy i ogłasza pomoc. Czytaj gazetę w każdym sezonie.</li>
-  <li><b>Ubezpieczenie</b> zbiorów (opcjonalne) zwraca 50% straty względem normalnej pogody. Składka jest dotowana przez państwo.</li>
-  <li>Koszty stałe to <b>${FIXED} tys. zł</b>, a utrzymanie rodziny <b>${LIVING} tys. zł</b> na sezon. Niezasiany hektar kosztuje <b>${UNSOWN} tys. zł</b>.</li>
-  <li>Ujemna gotówka kosztuje 12% odsetek. Poniżej −50 tys. zł gospodarstwo upada i gra się kończy.</li></ul></div>
+ <div class="panel"><h3>Co musisz wiedzieć</h3><div class="feat">
+  <div>${wIcon('N',38)}<p><b>Prognoza pogody</b><span>Trafia w około 6 na 10 sezonów. Pogoda zmienia plony.</span></p></div>
+  <div>${bagIcon(36)}<p><b>Nawóz 0–${LMAX}</b><span>Za mało obniża plon, za dużo kosztuje więcej, niż daje. W suszy mniej, w dobrym roku więcej.</span></p></div>
+  <div><svg width="36" height="36" viewBox="0 0 48 48">${ICO.rot}</svg><p><b>Płodozmian</b><span>Ta sama uprawa dwa lata z rzędu daje niższy plon (pszenica −5%, rzepak i ziemniaki −12%). Pole z wykrzyknikiem.</span></p></div>
+  <div>${icoSVG('chart',36)}<p><b>Ceny rynkowe</b><span>Zależą od tego, ile zasiali wszyscy rolnicy. Bank podaje raport o siewach, ale z błędem.</span></p></div>
+  <div>${icoSVG('news',36)}<p><b>Gazeta i rząd</b><span>Dopłaty, limity i pomoc zmieniają się w trakcie gry. Czytaj gazetę w każdym sezonie.</span></p></div>
+  <div>${icoSVG('shield',36)}<p><b>Ubezpieczenie</b><span>Opcjonalne. Zwraca 50% straty względem normalnego roku. Państwo dopłaca do składki.</span></p></div>
+  <div>${cropIcon('rzepak',36)}<p><b>Rzepak płaci rok później</b><span>Zasiany teraz, zapłata w następnym sezonie. W ostatnim sezonie nie sieje się go.</span></p></div>
+  <div>${icoSVG('coin',36)}<p><b>Koszty i długi</b><span>Stałe ${FIXED} tys. zł, rodzina ${LIVING} tys. zł, odłóg ${UNSOWN} tys. zł/ha. Dług kosztuje 12%. Poniżej −50 tys. zł gospodarstwo upada.</span></p></div></div></div>
  <div class="panel"><h3>Trzy pytania kontrolne</h3>
   ${Q.map((q,i)=>`<div><p><b>${i+1}.</b> ${q[0]}</p>${q[1].map((o,j)=>`<label class="opt" style="margin-top:6px"><input type="radio" name="q${i}" value="${j}"><span>${o}</span></label>`).join('')}<p class="small" id="fb${i}"></p></div>`).join('')}
   <div><button id="chk">Sprawdź odpowiedzi</button> <button id="st" class="ghost" hidden>Zaczynam grę</button></div></div>`;
@@ -250,55 +357,61 @@ function rules(){
    if(all){$('#chk').hidden=true;$('#st').hidden=false;$('#st').className=''}};
  $('#st').onclick=()=>{S.screen='season';S.t0=Date.now();render()};}
 const capHa=(k,t)=>k==='rzepak'?(t===T-1?0:RZ_MAX):LAND;
-function historyTable(t){
- if(t<1)return'<p class="muted small">Historia cen pojawi się po pierwszym sezonie.</p>';
- const from=Math.max(0,t-5);let rows='';
- for(let i=t-1;i>=from;i--){rows+=`<tr><td>Sezon ${i+1}</td>${CROPS.map(k=>{const p=W.price[i][k],q=i>0?W.price[i-1][k]:P[k].pbar,d=p-q;
-   return`<td class="num">${zlt(p)} <span class="${d>=0?'pos':'neg'}">${d>=0?'▲':'▼'}</span></td>`}).join('')}</tr>`}
- return `<div class="scroll"><table><tr><th>Cena za tonę (zł)</th>${CROPS.map(k=>`<th>${cname(k)}</th>`).join('')}</tr>${rows}</table></div>`}
-function reportText(t){const sd=S.info==='dokladna'?SD_FINE:SD_COARSE,rep=S.info==='dokladna'?W.repF[t]:W.repC[t];
- return `<ul style="margin:0;padding-left:18px;display:flex;flex-direction:column;gap:4px">${CROPS.map(k=>{
-  const d=(rep[k]-1)*100;
-  const txt=d>=4?`zasiali o około ${f0(d)}% więcej niż zwykle`:d<=-4?`zasiali o około ${f0(-d)}% mniej niż zwykle`:'zasiali mniej więcej tyle co zwykle';
-  return `<li>${cname(k)}: rolnicy w regionie ${txt}.${k==='rzepak'?' To wpłynie na cenę rzepaku dopiero za rok.':''}</li>`}).join('')}</ul>
-  <p class="small muted">Raport banku. Taki raport zwykle myli się o około ±${f0(sd*100)} p.p. Więcej siewu w regionie zwykle oznacza niższą cenę po zbiorach.</p>`}
+const cap=s=>s.charAt(0).toUpperCase()+s.slice(1);
+const lastP=(k,s)=>s>0?W.price[s-1][k]:P[k].pbar;
+function marketTiles(t){
+ return `<div class="tiles">${CROPS.map(k=>{
+  const h=[P[k].pbar,...W.price.slice(0,t).map(p=>p[k])].slice(-6),cur=h[h.length-1],d=t>0?(cur/h[h.length-2]-1)*100:null;
+  return `<div class="tile" style="--c:${COL[k]}"><div class="top">${cropIcon(k,34)}<b>${NAME[k]}</b></div>
+   <div class="pr">${zlt(cur)} <span class="small muted" style="font-family:var(--f-body)">zł/t</span></div>
+   <div class="row" style="justify-content:space-between;flex-wrap:nowrap"><span class="dl ${d===null?'muted':d>=0?'pos':'neg'}">${d===null?'cena wyjściowa':(d>=0?'▲ +':'▼ ')+f0(d)+'%'}</span>${spark(h,COL[k])}</div>
+   <span class="small muted">${t>0?'ostatni sezon · trend '+h.length+' sez.':'start gry'}</span></div>`}).join('')}</div>`}
+function reportViz(t){const sd=S.info==='dokladna'?SD_FINE:SD_COARSE,rep=S.info==='dokladna'?W.repF[t]:W.repC[t],X=d=>150+Math.max(-48,Math.min(48,d))*3;
+ return `<div class="label">Raport banku: ile siały inne gospodarstwa (zmiana względem zwykłego roku)</div>
+ ${CROPS.map(k=>{const d=(rep[k]-1)*100,e=sd*100,x=X(d);
+  return `<div class="rep">${cropIcon(k,26)}<svg class="bar" viewBox="0 0 300 24" preserveAspectRatio="none" aria-label="${NAME[k]} ${f0(d)}%"><rect x="0" y="4" width="300" height="16" rx="8" fill="var(--soft)"/><line x1="150" y1="0" x2="150" y2="24" stroke="var(--muted)" stroke-width="1.5"/><rect x="${Math.min(150,x)}" y="6" width="${Math.abs(x-150)}" height="12" rx="4" fill="${COL[k]}"/><g stroke="var(--ink)" stroke-width="1.6"><line x1="${X(d-e)}" y1="12" x2="${X(d+e)}" y2="12"/><line x1="${X(d-e)}" y1="7" x2="${X(d-e)}" y2="17"/><line x1="${X(d+e)}" y1="7" x2="${X(d+e)}" y2="17"/></g></svg><b class="num small">${d>=0?'+':'−'}${f0(Math.abs(d))}%</b></div>`}).join('')}
+ <p class="small muted">Cienka kreska to możliwy błąd raportu (±${f0(sd*100)} p.p.). Więcej siewu u innych zwykle oznacza niższą cenę po zbiorach${' (rzepak: dopiero za rok)'}.</p>`}
 function season(){
- const t=S.t,fertNow=FERT_IDX[t],costNow=COST_IDX[t],fcw=W.fc[t],lastP=t>0?W.price[t-1]:null;
+ const t=S.t,fertNow=FERT_IDX[t],costNow=COST_IDX[t],fcw=W.fc[t];
  const news=[...NEWS[t]];
- if(fertNow>1&&FERT_IDX[t-1]!==fertNow)news.push({tag:'koszt',h:'Nawozy drożeją',t:`Ceny nawozów wzrosły o ${f0((fertNow-1)*100)}%.`});
- if(costNow>1&&COST_IDX[t-1]!==costNow)news.push({tag:'koszt',h:'Droższe paliwo i maszyny',t:`Koszty paliwa i usług maszynowych wzrosły o ${f0((costNow-1)*100)}%. Rosną koszty stałe i zmienne.`});
- if(t>0&&FERT_IDX[t-1]>1&&fertNow===1)news.push({tag:'koszt',h:'Nawozy tanieją',t:'Ceny nawozów wróciły do poprzedniego poziomu.'});
- if(t>0&&COST_IDX[t-1]>1&&costNow===1)news.push({tag:'koszt',h:'Koszty wróciły do normy',t:'Paliwo i maszyny kosztują tyle co wcześniej.'});
- if(t>0)news.push({tag:'rynek',h:'Ceny z poprzedniego sezonu',t:CROPS.map(k=>`${NAME[k]} ${zlt(lastP[k])} zł/t`).join(', ')+'.'});
- const maxL=capL(t);
+ if(fertNow>1&&FERT_IDX[t-1]!==fertNow)news.push({tag:'koszt',ic:'bag',h:'Nawozy drożeją',t:`Ceny nawozów wzrosły o ${f0((fertNow-1)*100)}%.`});
+ if(costNow>1&&COST_IDX[t-1]!==costNow)news.push({tag:'koszt',ic:'pump',h:'Droższe paliwo i maszyny',t:`Koszty paliwa i usług maszynowych wzrosły o ${f0((costNow-1)*100)}%.`});
+ if(t>0&&FERT_IDX[t-1]>1&&fertNow===1)news.push({tag:'koszt',ic:'bag',h:'Nawozy tanieją',t:'Ceny nawozów wróciły do poprzedniego poziomu.'});
+ if(t>0&&COST_IDX[t-1]>1&&costNow===1)news.push({tag:'koszt',ic:'pump',h:'Koszty wróciły do normy',t:'Paliwo i maszyny kosztują tyle co wcześniej.'});
+ const maxL=capL(t),TG={pol:'Polityka',gosp:'Gospodarstwo',rynek:'Rynek',koszt:'Koszty'};
+ const wfx=k=>(P[k].W[fcw]-1)*100;
+ const lead=news[0],rest=news.slice(1);
  app.innerHTML=`
  <div class="dots" aria-label="Postęp gry">${[...Array(T).keys()].map(i=>`<i class="${i<t?'on':i===t?'cur':''}"></i>`).join('')}</div>
- <div class="status"><div><span class="label">Sezon</span><b>${t+1} z ${T}</b></div><div><span class="label">Gotówka (tys. zł)</span><b class="${S.cash<0?'neg':''}">${f1(S.cash)}</b></div><div><span class="label">Wolne pole</span><b id="land">30 ha</b></div></div>
- <div class="scene">${sceneSVG(fcw)}<div class="cap"><div><div class="label" style="color:#fff;opacity:.85">Prognoza na sezon ${t+1}</div><b>${WNAME[fcw]}</b></div><span class="small" style="max-width:240px;opacity:.9">Prognoza trafia tylko w około 6 przypadkach na 10.</span></div></div>
- <p class="small">${WDESC[fcw]}</p>
- <div class="paper"><div class="mast"><span>Wieści Rolnicze</span><span>Sezon ${t+1}</span></div>
-  ${news.map(n=>`<div class="item"><span class="tag ${n.tag}">${{pol:'Polityka',gosp:'Gospodarstwo',rynek:'Rynek',koszt:'Koszty'}[n.tag]||n.tag}</span><b>${n.h}</b><span class="small">${n.t}</span></div>`).join('')}</div>
- <div class="panel"><div class="label">Rynek</div>
-  ${historyTable(t)}
-  <div class="label">Raport banku: co sieją inni rolnicy</div>${reportText(t)}
-  ${t>0&&S.pend.ha>0?`<p class="small"><b>Rzepak z poprzedniego siewu (${S.pend.ha} ha)</b> zbierzesz w tym sezonie.</p>`:''}
-  <details ${t===0?'open':''}><summary style="cursor:pointer;font-weight:600">Jak pogoda wpływa na plony (ściąga)</summary><div style="margin-top:8px">${weatherTable()}</div></details></div>
+ <div class="hud"><div class="av">${farmerSVG(moodOf(S.cash-START),52)}</div><div class="stats"><div><span class="label">Sezon</span><b>${t+1} z ${T}</b></div><div><span class="label">Gotówka</span><b class="${S.cash<0?'neg':''}">${f1(S.cash)}</b></div><div><span class="label">Wolne pole</span><b id="land">30 ha</b></div></div></div>
+ <div class="scene">${sceneSVG(fcw)}</div>
+ <div class="wx" style="background:${WBG[fcw]}"><div class="wx-top"><div class="ic">${wIcon(fcw,76)}</div><div><div class="label" style="color:#fff;opacity:.9">Prognoza na sezon ${t+1}</div><div class="wx-name">${cap(WNAME[fcw])}</div><div class="wx-meta">${WMETA[fcw]}</div></div>
+  <div class="gauge"><svg width="58" height="58" viewBox="0 0 58 58"><circle cx="29" cy="29" r="24" fill="none" stroke="rgba(255,255,255,.3)" stroke-width="6"/><circle cx="29" cy="29" r="24" fill="none" stroke="#fff" stroke-width="6" stroke-dasharray="${(0.6*150.8).toFixed(1)} 150.8" transform="rotate(-90 29 29)" stroke-linecap="round"/><text x="29" y="34" text-anchor="middle" font-size="14" font-weight="700" fill="#fff" font-family="IBM Plex Mono">60%</text></svg><div>trafność<br>prognozy</div></div></div>
+  <div class="label" style="color:#fff;opacity:.9">Wpływ pogody na plony</div>
+  <div class="wx-crops">${CROPS.map(k=>{const d=wfx(k);return `<div class="chipw">${cropIcon(k,30)}<b>${d>0.5?'▲ +':d<-0.5?'▼ ':'● '}${f0(d)}%</b><span>${NAME[k]}</span></div>`}).join('')}</div></div>
+ <div class="paper"><div class="mast"><div class="big">Wieści Rolnicze</div><div class="sub"><span>Region wrocławski</span><span>Sezon ${t+1}</span><span>Cena 0,0 zł</span></div></div>
+  <div class="lead"><div class="pic">${newsIcon(lead.ic,60)}</div><div><span class="tag ${lead.tag}">${TG[lead.tag]}</span><b>${lead.h}</b><span class="t">${lead.t}</span></div></div>
+  ${rest.length?`<div class="nws-wrap">${rest.map(n=>`<div class="nws">${newsIcon(n.ic,34)}<div><span class="tag ${n.tag}">${TG[n.tag]}</span><b>${n.h}</b><span class="t">${n.t}</span></div></div>`).join('')}</div>`:''}</div>
+ <div class="panel"><div class="label">Ceny na rynku (zł za tonę)</div>${marketTiles(t)}
+  ${reportViz(t)}
+  ${t>0&&S.pend.ha>0?`<div class="pending">${cropIcon('rzepak',34)}<p><b>Rzepak z poprzedniego siewu (${S.pend.ha} ha)</b> zbierzesz w tym sezonie.</p></div>`:''}
+  <details ${t===0?'open':''}><summary style="cursor:pointer;font-weight:600">Ściąga: pogoda a plony</summary><div style="margin-top:8px">${weatherTable()}</div></details></div>
  <div class="panel"><div class="label">Twoje pole (30 ha)</div><div id="map"></div>
-  <div class="legend">${CROPS.map(k=>`<span><i style="background:${COL[k]}"></i>${NAME[k]}</span>`).join('')}<span><i style="background:var(--soil);opacity:.6"></i>odłóg</span><span><b style="color:var(--warn)">!</b> ta sama uprawa co rok temu</span></div></div>
+  <div class="legend">${CROPS.map(k=>`<span>${cropIcon(k,18)}${NAME[k]}</span>`).join('')}<span><i style="background:var(--soil);opacity:.6"></i>odłóg</span><span><b style="color:var(--warn)">!</b> ta sama uprawa co rok temu</span></div></div>
  <div class="grid3">${CROPS.map(k=>`
-  <div class="crop" style="--c:${COL[k]}"><h3>${SYM[k]} ${NAME[k]}</h3>
+  <div class="crop" style="--c:${COL[k]}"><h3 class="row" style="gap:8px;flex-wrap:nowrap">${cropIcon(k,36)}${NAME[k]}</h3>
    <div class="label">Powierzchnia (ha)</div>
    <div class="stepper"><button data-k="${k}" data-d="-1" aria-label="mniej">−</button><b id="ha-${k}">0</b><button data-k="${k}" data-d="1" aria-label="więcej">+</button></div>
    <input type="range" min="0" max="${capHa(k,t)}" step="1" value="0" id="sl-${k}" aria-label="Powierzchnia ${NAME[k]} w hektarach">
    <p class="small muted" id="mx-${k}"></p>
-   <div class="row" style="justify-content:space-between"><span class="label">Nawóz (0–${maxL})</span><b class="num" id="lv-${k}">nie wybrano</b></div>
+   <div class="row" style="justify-content:space-between;flex-wrap:nowrap"><span class="row" style="gap:6px;flex-wrap:nowrap">${bagIcon(24)}<span class="label">Nawóz (0–${maxL})</span></span><b class="num" id="lv-${k}">nie wybrano</b></div>
+   <div class="meter" id="mt-${k}"></div>
    <input type="range" min="0" max="${maxL}" step="1" value="${Math.min(5,maxL)}" id="fl-${k}" aria-label="Poziom nawozu ${NAME[k]}">
-   <div class="ticks">${[...Array(maxL+1).keys()].map(i=>`<span class="${i===REC[k]?'rec':''}">${i}</span>`).join('')}</div>
-   <p class="small muted">Zalecany w normalnym roku: <b>${REC[k]}</b></p>
-   <div class="label">Plon przy tym nawozie, zależnie od pogody</div><div class="out4" id="o4-${k}"></div>
+   <p class="small muted">Ramka = zalecany poziom w normalnym roku (${REC[k]}).</p>
+   <div class="label">Plon przy tej pogodzie</div><div class="out4" id="o4-${k}"></div>
    <div class="kv"><span>Koszt / ha</span><span id="pc-${k}">—</span></div></div>`).join('')}</div>
- <div class="panel"><div class="label">Ubezpieczenie zbiorów</div>
-  <label class="opt"><input type="checkbox" id="ins" ${S.ins?'checked':''}><span>Ubezpiecz zbiory tego sezonu. Składka: <b class="num" id="prem">0,0</b> tys. zł. Przy suszy lub gradzie zwrot 50% straty względem normalnej pogody. Państwo dopłaca do składki.</span></label></div>
+ <div class="panel"><div class="row" style="gap:10px;flex-wrap:nowrap">${icoSVG('shield',34)}<div class="label">Ubezpieczenie zbiorów</div></div>
+  <label class="opt"><input type="checkbox" id="ins" ${S.ins?'checked':''}><span>Ubezpiecz zbiory. Składka: <b class="num" id="prem">0,0</b> tys. zł. Zwrot 50% straty względem normalnego roku. Państwo dopłaca do składki.</span></label></div>
  <div class="panel"><div class="label">Koszty tego sezonu (tys. zł)</div>
   <div class="kv"><span>Siew i nawóz</span><span id="c1"></span></div><div class="kv"><span>Koszty stałe (maszyny, dzierżawa)</span><span id="c2"></span></div><div class="kv"><span>Utrzymanie rodziny</span><span id="c3"></span></div><div class="kv"><span>Odłóg (niezasiane ha × ${UNSOWN})</span><span id="c4"></span></div>${EXTRA[t]?`<div class="kv"><span>Wydatek nieplanowany</span><span>${f1(EXTRA[t])}</span></div>`:''}
   <p class="small bad" id="warn"></p></div>
@@ -318,11 +431,12 @@ function season(){
    S.plan.ha[k]=Math.max(0,Math.min(S.plan.ha[k],allowed));
    sl.max=allowed;sl.value=S.plan.ha[k];
    $('#ha-'+k).textContent=S.plan.ha[k];
-   $('#mx-'+k).textContent=k==='rzepak'&&t===T-1?'W ostatnim sezonie nie sieje się rzepaku.':`Możesz zasiać do ${allowed} ha`+(k==='rzepak'?' (limit rzepaku '+RZ_MAX+' ha, przychód za rok)':'')+'.';
-   const L=S.plan.L[k],has=L!==null,show=has?L:null;
+   $('#mx-'+k).textContent=k==='rzepak'&&t===T-1?'W ostatnim sezonie nie sieje się rzepaku.':`Możesz zasiać do ${allowed} ha`+(k==='rzepak'?' (limit '+RZ_MAX+' ha, zapłata za rok)':'')+'.';
+   const L=S.plan.L[k],has=L!==null;
    $('#lv-'+k).textContent=has?String(L):'nie wybrano';
+   $('#mt-'+k).innerHTML=[...Array(maxL).keys()].map(i=>`<i class="${has&&i<L?'on':''} ${i+1===REC[k]?'rec':''}"></i>`).join('');
    $('#pc-'+k).textContent=has?f1(perHa(k,t,L))+' tys. zł':'—';
-   $('#o4-'+k).innerHTML=has?['G','N','D','H'].map(w=>{const v=P[k].W[w]*yfw(k,L,w)*100;return`<div><span>${WSHORT[w]}</span><b class="${v>=100?'pos':v<70?'neg':''}">${f0(v)}%</b></div>`}).join(''):'<p class="small muted" style="grid-column:1/-1">Wybierz poziom nawozu, aby zobaczyć plon.</p>'});
+   $('#o4-'+k).innerHTML=has?['G','N','D','H'].map(w=>{const v=P[k].W[w]*yfw(k,L,w)*100;return`<div>${wIcon(w,26)}<b class="${v>=100?'pos':v<70?'neg':''}">${f0(v)}%</b></div>`}).join(''):'<p class="small muted" style="grid-column:1/-1">Wybierz poziom nawozu, aby zobaczyć plon.</p>'});
   const c=planCost(t,S.plan);
   $('#map').innerHTML=fieldSVG(S.plan,S.prev,t);
   $('#cost').textContent=f1(c.total+(S.ins?premium():0));$('#land').textContent=(LAND-c.sown)+' ha';$('#prem').textContent=f1(premium());
@@ -345,34 +459,56 @@ function commit(){
   przychod:+r.revNow.toFixed(2),koszty:+r.c.total.toFixed(2),odsetki:+r.interest.toFixed(2),wynik:+r.net.toFixed(2),gotowka:+S.cash.toFixed(2),czas_s:+secs.toFixed(1)};
  S.log.push(row);
  send({typ:'sezon',kod:S.id,wariant:S.info,wersja:GAME_VERSION,loteria:S.lot===null?null:S.lot+1,quiz:S.quiz.join(''),...row});
- S.last={t,r,ha:{...S.plan.ha},pend:{...S.pend},ins:S.ins};
+ S.last={t,r,ha:{...S.plan.ha},L:{...S.plan.L},pend:{...S.pend},prevHa:{...S.prev.ha},ins:S.ins};
  const prevRz=S.prev.ha.rzepak;
  S.prev={ha:{...S.plan.ha}};
  S.pend={ha:S.plan.ha.rzepak,L:S.plan.L.rzepak,rep:Math.min(S.plan.ha.rzepak,prevRz)};
  S.over=S.cash<BANKR;S.screen='result';render();}
+function cropRep(k){
+ const {t,r,ha,L,pend,prevHa}=S.last,hv=r.hv[k];if(!hv)return null;
+ const sowT=k==='rzepak'?t-1:t,Lk=nz(k==='rzepak'?pend.L:(L||{})[k]);
+ const rep=k==='rzepak'?pend.rep:Math.min(ha[k],(prevHa||{})[k]||0),share=Math.min(1,rep/hv),rot=1-(1-ROT[k])*share;
+ const yn=P[k].y*yfw(k,Lk,'N')*rot,pe=lastP(k,sowT),exp=hv*yn*pe,act=r.rev[k],cost=hv*perHa(k,Math.max(0,sowT),Lk);
+ const effW=P[k].W[r.w]-1,effF=yfw(k,Lk,r.w)/Math.max(1e-9,yfw(k,Lk,'N'))-1,effP=r.pr[k]/pe-1;
+ return{k,hv,exp,act,cost,effW,effF,effP,rotLoss:share*(1-ROT[k]),ey:(1+effW)*(1+effF)-1,tot:exp>0?act/exp-1:0}}
+const chip=(ic,label,v)=>{const p=v*100;if(Math.abs(p)<1)return `<span class="chip2">${ic}<span>${label}</span><b class="muted">0%</b></span>`;return `<span class="chip2">${ic}<span>${label}</span><b class="${p>0?'pos':'neg'}">${p>0?'+':'−'}${f0(Math.abs(p))}%</b></span>`};
 function result(){
- const {t,r,ha,pend}=S.last,done=S.over||t===T-1,fcOk=W.fc[t]===r.w;
- const lines=[];
- lines.push(`Pogoda: ${WNAME[r.w]}. ${fcOk?'Prognoza się sprawdziła.':'Prognoza się nie sprawdziła ('+WNAME[W.fc[t]]+').'}`);
- if(r.subsidy>0)lines.push(`Dopłata do różnorodności upraw: +${f1(r.subsidy)}.`);else if(subsidyOn(t))lines.push('Dopłaty do różnorodności nie dostałeś: potrzebne są dwie uprawy po minimum 5 ha.');
- if(r.aid>0)lines.push(`Pomoc po suszy: +${f1(r.aid)}.`);
- if(S.last.ins)lines.push(`Ubezpieczenie: składka −${f1(r.prem)}, wypłata +${f1(r.insPay)}.`);
+ const {t,r,ha,pend}=S.last,done=S.over||t===T-1,fcOk=W.fc[t]===r.w,reps=CROPS.map(cropRep).filter(Boolean);
+ const mx=Math.max(1,...reps.map(x=>Math.max(x.exp,x.act)));
+ const cards=reps.map(x=>{const cls=x.tot>=0.03?'p':x.tot<=-0.03?'n':'z',lbl=x.tot>=0.03?`▲ +${f0(x.tot*100)}%`:x.tot<=-0.03?`▼ −${f0(-x.tot*100)}%`:'≈ 0%';
+  return `<div class="rc" style="--c:${COL[x.k]}"><div class="hd">${cropIcon(x.k,38)}<div><b>${NAME[x.k]}</b><div class="small muted">${x.hv} ha${x.k==='rzepak'?' · zasiew z poprzedniego sezonu':''}</div></div><span class="pill ${cls}">${lbl}</span></div>
+   <div class="bars"><span>Oczekiwano</span><div class="tr"><i class="exp" style="width:${x.exp/mx*100}%"></i></div><span class="v">${f1(x.exp)}</span>
+    <span>Faktycznie</span><div class="tr"><i style="width:${x.act/mx*100}%"></i></div><span class="v"><b>${f1(x.act)}</b></span></div>
+   <div class="chips">${chip(wIcon(r.w,20),'Pogoda',x.effW)}${chip(bagIcon(18),'Nawóz do pogody',x.effF)}${chip(icoSVG('coin',18),'Cena',x.effP)}${x.rotLoss>0?chip(`<svg width="18" height="18" viewBox="0 0 48 48">${ICO.rot}</svg>`,'Ta sama uprawa',-x.rotLoss):''}</div>
+   <div class="kv"><span>Zysk z uprawy (przychód − koszty${x.k==='rzepak'?' z zeszłego sezonu':''})</span><span class="${x.act-x.cost>=0?'pos':'neg'}">${sgn(x.act-x.cost)} (${x.cost>0?(x.act-x.cost>=0?'+':'−')+f0(Math.abs((x.act-x.cost)/x.cost*100))+'%':'—'})</span></div></div>`}).join('');
+ const rows=[['Przychód z upraw',r.revNow],['Dopłaty i pomoc',r.subsidy+r.aid],...(S.last.ins?[['Ubezpieczenie',r.insPay-r.prem]]:[]),['Koszty gospodarstwa',-r.c.total],...(r.interest>0?[['Odsetki',-r.interest]]:[])];
+ const m=Math.max(1,...rows.map(x=>Math.abs(x[1])),Math.abs(r.net));
+ const bar=v=>`<div class="tr"><span class="mid"></span><i style="${v>=0?`left:50%;width:${Math.abs(v)/m*50}%;background:var(--good)`:`right:50%;width:${Math.abs(v)/m*50}%;background:var(--bad)`}"></i></div>`;
+ const pendEst=S.pend.ha*P.rzepak.y*yfw('rzepak',nz(S.pend.L),'N')*r.pr.rzepak;
+ let adv='';
+ if(reps.length){const dlt=x=>x.act-x.exp,worst=reps.reduce((a,b)=>dlt(b)<dlt(a)?b:a),best=reps.reduce((a,b)=>dlt(b)>dlt(a)?b:a),m2=[];
+  if(dlt(worst)<-2){const byY=worst.ey<=worst.effP;m2.push(`Najwięcej straciłeś na: <b>${NAME[worst.k]}</b> (${f0(dlt(worst))} tys.). ${byY?`Plon był o ${f0(-worst.ey*100)}% niższy niż w normalnym roku (${WNAME[r.w]}${worst.effF<-0.03?', nawóz nie pasował do pogody':''}).`:`Cena spadła o ${f0(-worst.effP*100)}% względem poprzedniego sezonu.`}`)}
+  if(dlt(best)>2)m2.push(`Najwięcej zyskałeś na: <b>${NAME[best.k]}</b> (+${f0(dlt(best))} tys. ponad oczekiwania).`);
+  if(r.net<0&&S.pend.ha>0&&t<T-1)m2.push('Część nakładów (rzepak) zwróci się dopiero za rok, dlatego ten sezon wygląda gorzej.');
+  adv=m2.join('<br>')}
+ const sub=subsidyOn(t)&&r.subsidy===0?'<span class="small muted">Dopłaty do różnorodności nie dostałeś: potrzebne są dwie uprawy po minimum 5 ha.</span>':'';
  app.innerHTML=`
- <div class="scene">${sceneSVG(r.w)}<div class="cap"><div><div class="label" style="color:#fff;opacity:.85">Wynik sezonu ${t+1}</div><b>${WNAME[r.w]}</b></div><b class="num" style="color:#fff">${sgn(r.net)}</b></div></div>
- <div class="panel scroll"><table>
-  <tr><th>Uprawa</th><th>Zbiór (ha)</th><th>Plon t/ha</th><th>Cena zł/t</th><th>Przychód</th></tr>
-  ${CROPS.map(k=>`<tr><td>${cname(k)}${k==='rzepak'?'<br><span class="small muted">z zasiewu z poprzedniego sezonu</span>':''}</td><td class="num">${r.hv[k]}</td><td class="num">${f1(r.yld[k])}</td><td class="num">${zlt(r.pr[k])}</td><td class="num">${f1(r.rev[k])}</td></tr>`).join('')}
-  <tr><td colspan="4">Dopłaty i pomoc państwa</td><td class="num pos">+${f1(r.subsidy+r.aid)}</td></tr>
-  ${S.last.ins?`<tr><td colspan="4">Ubezpieczenie (wypłata − składka)</td><td class="num ${r.insPay-r.prem>=0?'pos':'neg'}">${sgn(r.insPay-r.prem)}</td></tr>`:''}
-  <tr><td colspan="4">Koszty (uprawy, stałe, rodzina, odłóg${EXTRA[t]?', awaria':''})</td><td class="num neg">−${f1(r.c.total)}</td></tr>
-  <tr><td colspan="4">Odsetki od zadłużenia</td><td class="num neg">−${f1(r.interest)}</td></tr>
-  <tr><td colspan="4"><b>Wynik sezonu</b></td><td class="num ${r.net>=0?'pos':'neg'}"><b>${sgn(r.net)}</b></td></tr>
-  <tr><td colspan="4"><b>Gotówka po sezonie (tys. zł)</b></td><td class="num"><b>${f1(S.cash)}</b></td></tr></table>
-  <ul class="small" style="margin:0;padding-left:18px">${lines.map(l=>`<li>${l}</li>`).join('')}</ul>
-  ${S.over?'<p class="bad">Gotówka spadła poniżej −50 tys. zł. Gospodarstwo upadło, gra kończy się.</p>':''}
-  </div>
+ <div class="scene">${sceneSVG(r.w)}<div class="cap"><div><div class="label" style="color:#fff;opacity:.9">Wynik sezonu ${t+1} · pogoda: ${WNAME[r.w]}</div><b>${fcOk?'Prognoza się sprawdziła':'Prognoza się pomyliła ('+WNAME[W.fc[t]]+')'}</b></div><b class="num" style="color:#fff;font-size:26px">${sgn(r.net)}</b></div></div>
+ ${adv?`<div class="adv"><div class="av">${farmerSVG(moodOf(r.net),46)}</div><p>${adv}</p></div>`:''}
+ <div class="label">Oczekiwania a rzeczywistość (przychód w tys. zł)</div>
+ ${cards||'<p class="muted">W tym sezonie nic nie zbierałeś.</p>'}
+ <div class="panel"><div class="label">Skąd wzięły się pieniądze (tys. zł)</div><div class="flow">
+  ${rows.map(x=>`<span>${x[0]}</span>${bar(x[1])}<span class="v ${x[1]>=0?'pos':'neg'}">${sgn(x[1])}</span>`).join('')}
+  <span><b>Wynik sezonu</b></span>${bar(r.net)}<span class="v ${r.net>=0?'pos':'neg'}"><b>${sgn(r.net)}</b></span></div>
+  <div class="kv"><span><b>Gotówka po sezonie</b></span><span><b>${f1(S.cash)}</b></span></div>${sub}
+  ${S.over?'<p class="bad">Gotówka spadła poniżej −50 tys. zł. Gospodarstwo upadło, gra kończy się.</p>':''}</div>
+ ${S.pend.ha>0&&!done?`<div class="pending">${cropIcon('rzepak',38)}<p><b>Rzepak w drodze: ${S.pend.ha} ha</b><br>Zapłata wpłynie dopiero w następnym sezonie i <b>nie jest</b> wliczona do gotówki teraz. Szacunek przy normalnej pogodzie i dzisiejszej cenie: <b class="num">ok. +${f0(pendEst)} tys. zł</b>.</p></div>`:''}
  <div class="dock"><div><div class="info"><span class="label">Gotówka (tys. zł)</span><b>${f1(S.cash)}</b></div><button id="nx">${done?'Zobacz podsumowanie':'Następny sezon'}</button></div></div>`;
  $('#nx').onclick=()=>{if(done){S.screen='end'}else{S.t++;S.plan=emptyPlan();S.screen='season'}render()};}
+function cashChart(L){const v=[START,...L.map(x=>x.gotowka)],mn=Math.min(0,...v),mx=Math.max(START,...v),W_=320,H_=120,pad=8,
+  X=i=>pad+i*(W_-2*pad)/(v.length-1||1),Y=y=>H_-pad-(y-mn)/((mx-mn)||1)*(H_-2*pad);
+ const pts=v.map((y,i)=>[X(i),Y(y)]);
+ return `<svg viewBox="0 0 ${W_} ${H_+16}" style="width:100%;height:auto" role="img" aria-label="Wykres gotówki"><line x1="${pad}" y1="${Y(0)}" x2="${W_-pad}" y2="${Y(0)}" stroke="var(--muted)" stroke-dasharray="3 3"/><line x1="${pad}" y1="${Y(START)}" x2="${W_-pad}" y2="${Y(START)}" stroke="var(--line)"/><polyline points="${pts.map(p=>p.join(',')).join(' ')}" fill="none" stroke="var(--accent)" stroke-width="2.6" stroke-linejoin="round"/>${pts.map((p,i)=>`<circle cx="${p[0]}" cy="${p[1]}" r="4" fill="${v[i]>=START?'var(--good)':'var(--bad)'}"/><text x="${p[0]}" y="${H_+12}" text-anchor="middle" font-size="10" fill="var(--muted)">${i}</text>`).join('')}</svg><p class="small muted">Linia pozioma: stan początkowy (${START} tys. zł). Przerywana: zero. Cyfry to numery sezonów.</p>`}
 function end(){
  const L=S.log;
  const hhi=L.map(x=>{const s=x.ha_psz+x.ha_rze+x.ha_zie||1;return((x.ha_psz/s)**2+(x.ha_rze/s)**2+(x.ha_zie/s)**2)}).reduce((a,b)=>a+b,0)/L.length;
@@ -387,6 +523,7 @@ function end(){
   <div class="kv"><span>Średnia różnorodność upraw (1 = jedna uprawa, 0,33 = równo trzy)</span><span>${f2(hhi)}</span></div>
   <div class="kv"><span>Średnie odchylenie nawozu od zalecanego (poziomy)</span><span>${f1(dev)}</span></div>
   <div class="kv"><span>Sezony z ubezpieczeniem</span><span>${meta.sezony_ubezp}</span></div></div>
+ <div class="panel"><div class="label">Twoja gotówka w kolejnych sezonach (tys. zł)</div>${cashChart(L)}</div>
  <div class="panel scroll"><table><tr><th>Sezon</th><th>Pogoda</th><th>Psz./Rze./Zie. (ha)</th><th>Nawóz</th><th>Wynik</th><th>Gotówka</th></tr>
   ${L.map(x=>`<tr><td>${x.sezon}</td><td>${WNAME[x.pogoda]}</td><td class="num">${x.ha_psz}/${x.ha_rze}/${x.ha_zie}</td><td class="num">${x.naw_psz}/${x.naw_rze}/${x.naw_zie}</td><td class="num ${x.wynik>=0?'pos':'neg'}">${sgn(x.wynik)}</td><td class="num">${f1(x.gotowka)}</td></tr>`).join('')}</table></div>
  <div class="panel"><h3>Dane do badania</h3><p class="small muted">${ENDPOINT?'Wyniki zostały wysłane automatycznie. Jeśli prowadząca badanie ich nie widzi, skopiuj poniższy tekst i wklej go w formularzu.':'Skopiuj poniższy tekst i wklej go w formularzu przekazanym przez prowadzącą badanie.'} Zawiera tylko kod uczestnika i decyzje w grze.</p>
